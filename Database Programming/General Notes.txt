@@ -1,0 +1,1 @@
+T-SQL'de SQL ifadelerinin sonunda ; kullanma zorunluluğu yoktur.

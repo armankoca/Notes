@@ -1,0 +1,28 @@
+-- Veritabanı Oluşturma --
+create database veterinary_hospital
+
+
+-- Kullanılacak Veritabanını Seçme --
+use veterinary_hospital
+
+-- Tablo Oluşturma
+create table veterinarians (
+    diploma_no bigint primary key,
+    first_name nvarchar(64) not null,
+    middle_name nvarchar(64) not null,
+    last_name nvarchar(64) not null,
+    birthday datetime not null,
+    job_start_date datetime not null
+)
+
+-- Otomatik Artan Alan Belirleme --
+identity(1, 1)
+İlk argüman başlangıç sayısını belirler.
+İkinci argüman artış miktarını belirler.
+
+-- Türler
+bigint / long
+varchar(n)
+nvarchar(n)
+datetime
+datetime2
