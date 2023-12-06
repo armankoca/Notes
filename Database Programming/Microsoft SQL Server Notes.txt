@@ -5,6 +5,7 @@ create database veterinary_hospital
 -- Kullanılacak Veritabanını Seçme --
 use veterinary_hospital
 
+
 -- Tablo Oluşturma
 create table veterinarians (
     diploma_no bigint primary key,
@@ -15,10 +16,12 @@ create table veterinarians (
     job_start_date datetime not null
 )
 
+
 -- Otomatik Artan Alan Belirleme --
 identity(1, 1)
 İlk argüman başlangıç sayısını belirler.
 İkinci argüman artış miktarını belirler.
+
 
 -- Türler
 bigint / long
@@ -26,3 +29,74 @@ varchar(n)
 nvarchar(n)
 datetime
 datetime2
+
+
+-- Değişken Tanımları --
+TSQL'de değişken bildirilirken isimler @ işareti ile başlar.
+declare anahtar sözcüğü ile kullanılır.
+Değişkene ilkdeğer verilebilir.
+Değişkene atama işlemi set anahtar sözcüğü kullanılarak yapılır.
+Değişkenler T-SQL function, stored procedure trigger gibi alt programlarda kullanılır.
+
+declare @name nvarchar(100) = 'Arman Koca'
+select * from users where first_name = @name
+set @name = 'Oguz Karan'
+
+
+-- Fonksiyon Tanımları --
+1. Scalar Functions
+2. Table Valued Functions
+3. Aggregate Functions
+4. System Functions.
+
+Fonksiyonlar create cümlesi ile tanımlanır.
+Tanımlanan bir fonksiyonun kullanılmasına Function Call - Fonksiyon Çağrısı denir.
+Fonksiyonların geri dönüş değerleri olabilir.
+Fonksiyonlara bilgi geçilmesi için tanımlanan alanlara parameter - parametre denir.
+Fonksiyonlara geçilen bilgiye ise argument - argüman denir.
+SQL Server'da Function Overloading mekanizması yoktur.
+
+
+-- Scalar Functions --
+En temel fonksiyonlardır.
+create function cümlesi kullanılarak yazılır.
+Ardından parametre değişkenleri tanımlanır.
+Ardından geri dönüş türü belirlenir.
+Fonksiyonun gövdesi as anahtar kelimesinden sonra begin ve end arasında yazılır.
+Fonksiyon çağrısı genel olarak şema ismi ve nokta operatörü ile çağırılır.
+Programcı herhangi bir şema yaratmazsa default şema dbo ismindedir.
+
+-- Örnek --
+create function add_two_ints(@a int, @b int)
+returns int as
+begin
+    declare @result int = @a + @b
+    return @result
+end
+go
+
+declare @a int = 10
+declare @b int = 20
+declare @c
+
+set @c = dbo.add_two_ints(@a, @b)
+
+select @c
+
+
+-- Hazır Fonksiyonlar --
+sqrt    : Karekök hesaplar
+power   : Aldığı taban ve üst değerlerine göre kuvvet değeri döner.
+Matematiksel fonksiyonlar geçersiz değerler için error oluşturur.
+
+
+-- Sınıf Çalışması --
+1. mapdb isimli bir veritabanı oluşturunuz.
+2. Bu veritabanında nokta çiftlerinin koordinat bilgilerini tutan,
+    coordinates isimli bir tablo yaratınız.
+3. Tablo içerisinde bir kaydın otomatik artan id bilgisi ile birlikte,
+   x1, y1, x2, y2 nokta değerleri real olarak tutulacak,
+4. Buna göre uzaklık bilgisini döndüren bir fonksiyon yazınız.
+5. Tüm kayıtlar için noktalarla birlikte aralarındaki uzaklıkları da getiren sorguyu yazınız.
+6. Uzaklık İçin Formül : sqrt((x1 - x2) ^ 2 + (y1 - y2) ^ 2)
+7. Verileri fake data generator ile belirleyebilirsiniz.
